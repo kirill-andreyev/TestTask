@@ -14,13 +14,13 @@ namespace TestTask.Services.Implementations
             _context = context;
         }
 
-        async Task<Order> IOrderService.GetOrder()
+        public async Task<Order> GetOrder()
         {
             var allOrders = await  _context.Orders.ToListAsync();
             return allOrders.MaxBy(x => x.Price); //Returns the order with the highest amount. If more than one returns the first
         }
 
-        async Task<List<Order>> IOrderService.GetOrders()
+        public async Task<List<Order>> GetOrders()
         {
             return await _context.Orders.Where(x => x.Quantity > 10).ToListAsync();
         }

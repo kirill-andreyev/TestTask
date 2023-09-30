@@ -14,18 +14,18 @@ namespace TestTask.Services.Implementations
             _context = context;
         }
 
-        async Task<User> IUserService.GetUser()
+        public async Task<User> GetUser()
         {
-            var allUsers = _context.Orders.GroupBy(x => x.UserId).Select(g => new
+            var userWithMaxOrders = _context.Orders.GroupBy(x => x.UserId).Select(g => new
             {
                 UserId = g.Key,
                 MaxNumberOfOrders = g.Count()
             }).OrderByDescending(x => x.MaxNumberOfOrders).FirstOrDefault();
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == allUsers.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userWithMaxOrders.UserId);
             return user;
         }
 
-        async Task<List<User>> IUserService.GetUsers()
+        public async Task<List<User>> GetUsers()
         {
             return await _context.Users.Where(x => x.Status == Enums.UserStatus.Inactive).ToListAsync();
         }
