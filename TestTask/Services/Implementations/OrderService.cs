@@ -17,7 +17,7 @@ namespace TestTask.Services.Implementations
         public async Task<Order> GetOrder()
         {
             var allOrders = await  _context.Orders.ToListAsync();
-            return allOrders.MaxBy(x => x.Price); //Returns the order with the highest amount. If more than one returns the first
+            return allOrders.MaxBy(x => x.Price * x.Quantity); //Returns the order with the highest amount. If more than one returns the first
         }
 
         public async Task<List<Order>> GetOrders()
